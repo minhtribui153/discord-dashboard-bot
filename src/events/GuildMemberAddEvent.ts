@@ -23,11 +23,11 @@ export default class GuildMemberAddEvent extends BaseEvent {
           .addFields([
             {
               name: 'Joined Server Since',
-              value: `<t:${member?.joinedTimestamp}:R>`,
+              value: `<t:${Math.floor((member?.joinedTimestamp!) / 1000)}:R>`,
             },
             {
               name: 'Account Created',
-              value: `<t:${member?.user?.createdTimestamp}:R>`,
+              value: `<t:${Math.floor((member?.user?.createdTimestamp!) / 1000)}:R>`,
             }
           ])
         channel.send({ embeds: [embed] });

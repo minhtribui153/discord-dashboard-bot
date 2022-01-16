@@ -13,17 +13,14 @@ export default class GuildCreateEvent extends BaseEvent {
   }
   
   async run(client: DiscordClient, guild: Guild) {
-    console.log("Joined guild: " + guild.name);
 
     const config = await this.guildConfigRepository.findOne({
       guildId: guild.id,
     });
 
     if (config) {
-      console.log(`A configuration was found!`);
       client.configs.set(guild.id, config);
     } else {
-      console.log(`A configuration was NOT found. Creating One...`);
       const newConfig = this.guildConfigRepository.create({
         guildId: guild.id,
       });
