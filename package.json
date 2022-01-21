@@ -1,5 +1,5 @@
 {
-  "name": "bot",
+  "name": "discord-dashboard-bot",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -19,7 +19,8 @@
   },
   "scripts": {
     "dev": "nodemon ./src/index.ts",
-    "start": "node ./build/index.js",
+    "start": "nodemon ./src/index.ts",
+    "start:prod": "node ./build/index.js",
     "build": "tsc"
   }
 }

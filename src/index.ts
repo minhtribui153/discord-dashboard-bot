@@ -1,4 +1,4 @@
-import "dotenv/config";
+import 'dotenv/config';
 import "reflect-metadata";
 import { registerCommands, registerEvents } from './utils/registry';
 import DiscordClient from './client/client';
@@ -7,6 +7,7 @@ import { createConnection, getRepository } from "typeorm";
 import { io } from 'socket.io-client';
 import { entities } from "./typeorm";
 import { GuildConfiguration } from "./typeorm/entities/GuildConfiguration";
+import { checkForGuildConfigs } from './functions';
 
 const client = new DiscordClient({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS ] });
 
@@ -31,7 +32,7 @@ const client = new DiscordClient({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS
   socket.emit('connection');
   socket.on('guildConfigUpdate', (config: GuildConfiguration) => {
     client.configs.set(config.guildId, config);
-  })
+  });
 
 
   // Guild Configuration
@@ -40,6 +41,8 @@ const client = new DiscordClient({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS
   guildConfigs.forEach(config => configs.set(config.guildId, config));
 
   client.configs = configs;
+
+  checkForGuildConfigs(client, configs, configRepo);
 
   // Registration
   await registerCommands(client, '../commands');
